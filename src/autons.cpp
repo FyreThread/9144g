@@ -3,9 +3,10 @@
 #include "subroutines.h"
 
 using namespace my_robot;
-
+bool red_side;
 // AUTONOMOUS ROUTINES
 void redSWP() {
+  red_side = true;
   doinker.set_value(false);
   const int forwardPower = 127;   // Forward motor power (0-127)
   const int reversePower = -127;  // Reverse motor power (0-127)
@@ -52,6 +53,7 @@ void redSWP() {
 }
 
 void blueSWP() {
+  red_side = false;
   doinker.set_value(false);
   const int forwardPower = 127;   // Forward motor power (0-127)
   const int reversePower = -127;  // Reverse motor power (0-127)
@@ -98,6 +100,7 @@ void blueSWP() {
 }
 
 void redNegative() {
+  red_side = true;
   doinker.set_value(false);
   const int forwardPower = 600;   // Forward motor power (0-127)
   const int reversePower = -600;  // Reverse motor power (0-127)
@@ -131,6 +134,7 @@ void redNegative() {
 }
 
 void skills() {
+  red_side = true;
   doinker.set_value(false);
   const int forwardPower = 127;   // Forward motor power (0-127)
   const int reversePower = -127;  // Reverse motor power (0-127)
