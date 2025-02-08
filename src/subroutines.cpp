@@ -166,4 +166,28 @@ void calibrateWallStake() {
     pros::lcd::print(3, "Calibration timeout! Check wall stake.");
   }
 }
+
+// Function to detect and react to rings
+void colorSort(int waitTimeMs, int stopTimeMs, bool red_side) {
+  color_sort.set_led_pwm(100);  // Ensure the sensor LED is on
+
+  while (true) {
+    pros::c::optical_rgb_s_t color_data = color_sort.get_rgb();
+    int detected_hue = color_sort.get_hue();
+
+    bool blue_detected = (detected_hue > 180 && detected_hue < 260);
+    bool red_detected = (detected_hue > 0 && detected_hue < 60);
+
+    if ((red_side && blue_detected) || (!red_side && red_detected)) {
+      // Stop the intake for the designated time
+      pros::delay(waitTimeMs);
+      secondStage.move_velocity(0);
+      pros::delay(stopTimeMs);
+      secondStage.move_velocity(600);  // Resume intake
+    }
+
+    pros::delay(20);  // Reduce CPU usage
+  }
+}
+
 }  // namespace my_robot

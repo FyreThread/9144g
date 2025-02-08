@@ -22,6 +22,7 @@ extern pros::adi::DigitalOut mogo;
 extern pros::adi::DigitalOut doinker;
 extern pros::adi::DigitalIn intake_sensor;
 extern pros::adi::DigitalIn wall_sensor;
+extern pros::Optical color_sort;
 
 extern pros::Motor wall_stake;
 

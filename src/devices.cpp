@@ -27,6 +27,7 @@ pros::adi::DigitalOut mogo('C', false);                   // Mobile goal mechani
 pros::adi::DigitalOut doinker('D', false);                // Doinker mechanism on port 'D'
 pros::adi::DigitalIn intake_sensor('H');                  // Intake sensor on port 'H'
 pros::adi::DigitalIn wall_sensor('G');                    // Wall sensor on port 'G'
+pros::Optical color_sort(15);
 
 // Define wall stake motor
 pros::Motor wall_stake(-1, pros::v5::MotorGears::red, pros::v5::MotorUnits::degrees);  // Wall stake motor on port -1
