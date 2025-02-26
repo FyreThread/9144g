@@ -14,14 +14,15 @@
 #include "pros/motors.h"  // IWYU pragma:  keep
 #include "pros/motors.hpp"
 #include "pros/optical.hpp"  // IWYU pragma:  keep
+#include "pros/rotation.hpp"
 
 namespace my_robot {
 
 // Define motor groups and individual motors
-pros::MotorGroup intake({6, -12});  // Intake motor group on ports 6 and -12
+pros::MotorGroup intake({-6, -12});  // Intake motor group on ports 6 and -12
 pros::Motor firstStage(-12,
                        pros::v5::MotorGears::green, pros::v5::MotorUnits::degrees);  // First stage motor
-pros::v5::Motor secondStage(6,
+pros::v5::Motor secondStage(-6,
                             pros::v5::MotorGears::blue);  // Second stage motor
 pros::adi::DigitalOut mogo('C', false);                   // Mobile goal mechanism on port 'C'
 pros::adi::DigitalOut doinker('D', false);                // Doinker mechanism on port 'D'
@@ -43,18 +44,21 @@ lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.0, lemlib::Omniwhe
 pros::Imu imu(5);  // Inertial sensor on port 5
 
 // Define the vertical encoder
-pros::adi::Encoder vertical_encoder('A', 'B', true);  // Optical shaft encoder on ports 'A' and 'B'
+pros::Rotation vertical_encoder(-18);   // Optical shaft encoder on ports 'A' and 'B'
+pros::Rotation horizontal_encoder(19);  // Optical shaft encoder on ports 'A' and 'B'
 
 // Define the vertical tracking wheel
-lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, .45);
+lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, 0.5);
+// Define the vertical tracking wheel
+lemlib::TrackingWheel horizontal_tracking_wheel(&horizontal_encoder, lemlib::Omniwheel::NEW_275, .125);
 
 // Setup odometry sensors
 lemlib::OdomSensors sensors(
-    &vertical_tracking_wheel,  // Vertical tracking wheel 1
-    nullptr,                   // Vertical tracking wheel 2 (not used)
-    nullptr,                   // Horizontal tracking wheel 1 (not used)
-    nullptr,                   // Horizontal tracking wheel 2 (not used)
-    &imu                       // Inertial sensor
+    &vertical_tracking_wheel,    // Vertical tracking wheel 1
+    nullptr,                     // Vertical tracking wheel 2 (not used)
+    &horizontal_tracking_wheel,  // Horizontal tracking wheel 1 (not used)
+    nullptr,                     // Horizontal tracking wheel 2 (not used)
+    &imu                         // Inertial sensor
 );
 
 // Define PID controllers
@@ -71,15 +75,15 @@ lemlib::ControllerSettings lateral_controller(
 );
 
 lemlib::ControllerSettings angular_controller(
-    2.245,  // Proportional gain (kP)
-    0.00,   // Integral gain (kI)
-    15,     // Derivative gain (kD)
-    0,      // Anti windup
-    0,      // Small error range, in degrees
-    0,      // Small error range timeout, in milliseconds
-    0,      // Large error range, in degrees
-    0,      // Large error range timeout, in milliseconds
-    0       // Maximum acceleration (slew)
+    2.5,   // Proportional gain (kP)
+    0.00,  // Integral gain (kI)
+    15,    // Derivative gain (kD)
+    0,     // Anti windup
+    0,     // Small error range, in degrees
+    0,     // Small error range timeout, in milliseconds
+    0,     // Large error range, in degrees
+    0,     // Large error range timeout, in milliseconds
+    0      // Maximum acceleration (slew)
 );
 
 // Create the chassis

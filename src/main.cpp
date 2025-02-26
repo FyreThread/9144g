@@ -2,6 +2,16 @@
 
 using namespace my_robot;
 
+void on_center_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+    pros::lcd::set_text(2, "I was pressed!");
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
+
 void initialize() {
   pros::lcd::initialize();                          // Initialize brain screen
   chassis.calibrate();                              // Calibrate sensors
@@ -10,6 +20,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+      {"AAAAAAAAAAh\n", skills},
       {"Red Solo Win Point\n", redSWP},
       {"Blue Solo Win Point\n", blueSWP},
       {"Red Negative\n", redNegative},
@@ -22,9 +33,9 @@ void initialize() {
   pros::Task screen_task([&]() {
     while (true) {
       // Print robot location to the brain screen
-      pros::lcd::print(0, "X: %f", chassis.getPose().x);          // X-coordinate
-      pros::lcd::print(1, "Y: %f", chassis.getPose().y);          // Y-coordinate
-      pros::lcd::print(2, "Theta: %f", chassis.getPose().theta);  // Heading
+      pros::lcd::print(5, "X: %f", chassis.getPose().x);          // X-coordinate
+      pros::lcd::print(6, "Y: %f", chassis.getPose().y);          // Y-coordinate
+      pros::lcd::print(7, "Theta: %f", chassis.getPose().theta);  // Heading
       pros::delay(20);                                            // Delay to save resources
     }
   });
