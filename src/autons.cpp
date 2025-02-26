@@ -157,10 +157,10 @@ void skills() {
   chassis.setPose(0, 0, 0);
 
   // Start route
-  // score wall stake here
-  chassis.moveToPose(1.49, -7.40, 1.43, 1500,
-                     {.forwards = false});  // Move to first mogo
+  wallThings(175, false);
+  chassis.moveToPoint(0, -4, 500);
   chassis.waitUntilDone();
+  calibrateWallStake();
 
   intake.move(0);
   chassis.waitUntilDone();

@@ -128,19 +128,21 @@ void intakeAutomation() {
 
 // Add your function definitions here
 
-void wallThings(int number) {
-  wall_stake.move_absolute(number, 127);
+void wallThings(int number, bool calibrate) {
+  wall_stake.move_absolute(number, 100);
   while (!((wall_stake.get_position() < (number + 7)) &&
            (wall_stake.get_position() > (number - 7)))) {
     // Continue running this loop as long as the motor is not within +-5 units
     // of its goal
     pros::delay(2);
   }
-  calibrateWallStake();
+  if (calibrate) {
+    calibrateWallStake();
+  }
 }
 
 void calibrateWallStake() {
-  const int timeoutMs = 3000;    // Max time to attempt calibration (3 seconds)
+  const int timeoutMs = 2000;    // Max time to attempt calibration (3 seconds)
   const int moveSpeed = -50;     // Speed for moving the stake down
   const int checkInterval = 10;  // Time between sensor checks (ms)
 

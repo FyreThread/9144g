@@ -8,7 +8,7 @@ void handleMotorStall(pros::Motor &motor, int forwardPower, int reversePower, in
 void stopIntakeOnSecondPress();
 void stopIntakeOnFirstPress();
 void intakeAutomation();
-void wallThings(int number);
+void wallThings(int number, bool calibrate);
 void calibrateWallStake();
 void colorSort(int waitTimeMs, int stopTimeMs, bool red_Side);
 }  // namespace my_robot

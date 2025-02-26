@@ -31,7 +31,7 @@ pros::adi::DigitalIn wall_sensor('G');                    // Wall sensor on port
 pros::Optical color_sort(15);
 
 // Define wall stake motor
-pros::Motor wall_stake(-1, pros::v5::MotorGears::red, pros::v5::MotorUnits::degrees);  // Wall stake motor on port -1
+pros::Motor wall_stake(1, pros::v5::MotorGears::red, pros::v5::MotorUnits::degrees);  // Wall stake motor on port -1
 
 // Define left and right motor groups for the drivetrain
 pros::MotorGroup left_motors({-2, 3, -4}, pros::MotorGearset::blue);   // Left motors on ports -2, 3, -4
