@@ -158,7 +158,7 @@ void skills() {
 
   // Start route
   wallThings(175, false);
-  chassis.moveToPoint(0, -4, 500);
+  chassis.moveToPoint(0, -6.85, 750);
   chassis.waitUntilDone();
   calibrateWallStake();
 
