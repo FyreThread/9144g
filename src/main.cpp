@@ -95,7 +95,7 @@ void opcontrol() {
     else if (controller.get_digital(DIGITAL_X))
       calibrateWallStake();  // Calibrate wall stake
     else if (controller.get_digital(DIGITAL_B))
-      wall_stake.move_absolute(40, 110);  // Move wall stake to load position
+      wall_stake.move_absolute(34, 110);  // Move wall stake to load position
 
     pros::delay(25);  // Delay for the poor IC
   }
