@@ -91,11 +91,11 @@ void opcontrol() {
 
     // Control wall stake motor
     if (controller.get_digital(DIGITAL_Y))
-      wall_stake.move_absolute(320, 110);  // Move wall stake to score position
+      wall_stake.move_absolute(150, 110);  // Move wall stake to score position
     else if (controller.get_digital(DIGITAL_X))
       calibrateWallStake();  // Calibrate wall stake
     else if (controller.get_digital(DIGITAL_B))
-      wall_stake.move_absolute(73, 110);  // Move wall stake to load position
+      wall_stake.move_absolute(40, 110);  // Move wall stake to load position
 
     pros::delay(25);  // Delay for the poor IC
   }

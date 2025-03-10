@@ -136,14 +136,14 @@ void wallThings(int number, bool calibrate) {
     // of its goal
     pros::delay(2);
   }
-  if (calibrate) {
+  if (calibrate == true) {
     calibrateWallStake();
   }
 }
 
 void calibrateWallStake() {
   const int timeoutMs = 2000;    // Max time to attempt calibration (3 seconds)
-  const int moveSpeed = -50;     // Speed for moving the stake down
+  const int moveSpeed = -80;     // Speed for moving the stake down
   const int checkInterval = 10;  // Time between sensor checks (ms)
 
   int elapsedTime = 0;  // Track elapsed time
@@ -169,7 +169,7 @@ void calibrateWallStake() {
   }
 }
 
-// Function to detect and react to rings
+// Function to detect and react to rings   colorSort(175, 150, true);
 void colorSort(int waitTimeMs, int stopTimeMs, bool red_side) {
   color_sort.set_led_pwm(100);  // Ensure the sensor LED is on
 
