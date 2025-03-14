@@ -11,4 +11,5 @@ void intakeAutomation();
 void wallThings(int number, bool calibrate);
 void calibrateWallStake();
 void colorSort(int waitTimeMs, int stopTimeMs, bool red_Side);
+void stopIntakeOnRedRing();
 }  // namespace my_robot

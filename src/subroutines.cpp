@@ -191,5 +191,21 @@ void colorSort(int waitTimeMs, int stopTimeMs, bool red_side) {
     pros::delay(20);  // Reduce CPU usage
   }
 }
+void stopIntakeOnRedRing() {
+  color_sort.set_led_pwm(100);  // Ensure the sensor LED is on
 
+  while (true) {
+    pros::c::optical_rgb_s_t color_data = color_sort.get_rgb();
+    int detected_hue = color_sort.get_hue();
+
+    bool red_detected = (detected_hue > 0 && detected_hue < 60);  // Red hue range
+
+    if (red_detected) {
+      intake.move(0);  // Stop the intake motor
+      pros::lcd::set_text(3, "Red Ring Detected! Intake Stopped.");
+    }
+
+    pros::delay(20);  // Reduce CPU usage
+  }
+}
 }  // namespace my_robot

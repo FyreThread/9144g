@@ -20,7 +20,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"AAAAAAAAAAh\n", skills},
+      {"AAAAAAAAAAh\n", redSWP},
       {"Red Solo Win Point\n", redSWP},
       {"Blue Solo Win Point\n", blueSWP},
       {"Red Negative\n", redNegative},
@@ -64,7 +64,7 @@ void opcontrol() {
     // Check if the robot is not connected to the competition control
     if (!pros::competition::is_connected()) {
       // If both DIGITAL_UP and DIGITAL_LEFT buttons are pressed, run autonomous routine
-      if (controller.get_digital(DIGITAL_UP) && controller.get_digital(DIGITAL_LEFT)) {
+      if (controller.get_digital(DIGITAL_A)) {
         autonomous();
       }
     }
@@ -96,7 +96,13 @@ void opcontrol() {
       calibrateWallStake();  // Calibrate wall stake
     else if (controller.get_digital(DIGITAL_B))
       wall_stake.move_absolute(34, 110);  // Move wall stake to load position
-
+    else if (controller.get_digital(DIGITAL_LEFT)) {
+      wall_stake.move(-600);  // Move wall stake reverse
+    } else if (controller.get_digital(DIGITAL_UP)) {
+      wall_stake.move(600);  // Move wall stake forward
+    } else {
+      wall_stake.move(0);  // Stop wall stake
+    }
     pros::delay(25);  // Delay for the poor IC
   }
 }

@@ -19,45 +19,49 @@ void redSWP() {
   const int forwardPower = 127;   // Forward motor power (0-127)
   const int reversePower = -127;  // Reverse motor power (0-127)
   const int reverseTimeMs = 300;  // Reverse duration in ms
+  const int waitTime = 500;
+  const int stopTime = 125;
 
   // Start a task to handle motor stall detection
   pros::Task motorTask([&]() {
     handleMotorStall(secondStage, forwardPower, reversePower, reverseTimeMs);
+  });
+  pros::Task cs([&]() {
+    colorSort(waitTime, stopTime, red_side);
   });
   wall_stake.tare_position();
   chassis.setBrakeMode(pros::E_MOTOR_BRAKE_BRAKE);
   chassis.setPose(0, 0, 0);
 
   // Start route
-  chassis.moveToPose(-13.25, -28.5, 31, 1500,
+  wallThings(170, false);
+  chassis.moveToPose(-20.8, -28.78, 90.67, 1600,
                      {.forwards = false});  // Move to first mogo
   chassis.waitUntilDone();
   mogo.set_value(true);  // Clamp mogo
-  pros::delay(250);
   intake.move(127);
-  chassis.moveToPose(3, -26, 86.5, 1750);
+  pros::Task calibrate(calibrateWallStake);
+  chassis.moveToPose(-29.32, -51.8, 200, 2500);
   chassis.waitUntilDone();
-  chassis.moveToPose(-25.25, -0.85, -90, 2500);
+  pros::delay(250);
+  chassis.moveToPose(-31.33, -38.74, 117.85, 1500, {.forwards = false});
+  chassis.waitUntilDone();
+  chassis.moveToPose(-16.31, -45.65, 111, 1000);
+  chassis.waitUntilDone();
+  chassis.moveToPose(-14.1, -8.65, -20.3, 2000);
   chassis.waitUntilDone();
   mogo.set_value(false);
-  pros::Task stop(stopIntakeOnSecondPress);
-  intake.move(127);
-  chassis.moveToPose(-40, -6.85, -90, 1000);
+  // It needs to stop on the second red here
+  chassis.moveToPose(-20.4, 16.86, -8.2, 2000);
   chassis.waitUntilDone();
-  chassis.moveToPose(-61, -26, 27.3, 2200,
-                     {.forwards = false});  // Move to second mogo
+  chassis.moveToPose(-46.02, 12.95, 90, 2000, {.forwards = false});
   chassis.waitUntilDone();
   mogo.set_value(true);
-  pros::delay(250);
-  intake.move(127);
-  chassis.turnToHeading(-90, 500);
+  chassis.moveToPose(-62.75, 30.59, -31.6, 2000);
   chassis.waitUntilDone();
-  chassis.moveToPose(-80, -26, -90, 1750);
+  chassis.moveToPose(-52.12, 9.55, -161.65, 2000);
   chassis.waitUntilDone();
-  chassis.setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
-  chassis.moveToPose(-45, -26, -270, 3000);
-  chassis.waitUntilDone();
-  intake.move(0);
+  wall_stake.move_absolute(160, 127);
 }
 
 void blueSWP() {
@@ -185,6 +189,100 @@ void skills() {
   wallThings(45, false);
   chassis.waitUntilDone();
   wallThings(150, false);
+  wallThings(150, false);
+
+  /*chassis.moveToPoint(-47.38, -52.91, 750, {.forwards = false});
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.turnToHeading(0, 500);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.moveToPose(-47, 3.0, 1.9, 3000);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.turnToHeading(-122, 500);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.moveToPose(-57.1, -3.63, -124.12, 1000);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.moveToPose(-58.12, 6.6, -227.75, 1000, {.forwards = false});
+
+
+  chassis.waitUntilDone();
+
+
+  mogo.set_value(false);
+
+
+  calibrateWallStake();
+
+
+  pros::Task cs([&]() { colorSort(waitTime, stopTime, red_side); });
+
+
+  chassis.moveToPose(-50, -97.15, -180.36, 4000);
+
+
+  wallThings(33, false);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.turnToHeading(-88.77, 500);
+
+
+  chassis.waitUntilDone();
+
+
+  intake.move_relative(-500, 100);
+
+
+  wallThings(70, false);
+
+
+  chassis.moveToPose(-4.88, -100, -90.65, 2000, {.forwards = false});
+
+
+  chassis.waitUntilDone();
+
+
+  mogo.set_value(true);
+
+
+  chassis.turnToHeading(-179, 500);
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.moveToPoint(-6.5, -115.5, 2000, {.maxSpeed = 40});
+
+
+  chassis.waitUntilDone();
+
+
+  chassis.moveToPose(-6.5, -107.82, -179, 1000, {.forwards = false});
+
+
+  chassis.waitUntilDone();
+  wallThings(203, false);*/
 
   intake.move(0);
   chassis.waitUntilDone();
