@@ -7,7 +7,7 @@ namespace my_robot {
 
 void handleMotorStall(pros::Motor &motor, int forwardPower, int reversePower, int reverseTimeMs) {
   const int stallThreshold = 2000;    // Adjust based on your motor's typical stalled current (in mA)
-  const int stallCheckInterval = 50;  // Interval to check motor status (ms)
+  const int stallCheckInterval = 10;  // Interval to check motor status (ms)
   const int stallDurationMs = 500;    // Duration the motor must be stalled before reacting (ms)
 
   int stallCounter = 0;
@@ -56,10 +56,12 @@ void stopIntakeOnSecondPress() {
         intake.move(0);
         pressCount = 0;  // Reset press count
       }
+
+      pros::delay(250);  // Debounce delay to prevent multiple triggers from a single press
     }
 
     wasPressed = isPressed;  // Update the previous state
-    pros::delay(20);         // Delay to prevent rapid toggling
+    pros::delay(25);         // Regular delay to reduce CPU load
   }
 }
 

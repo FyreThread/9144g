@@ -1,4 +1,6 @@
+#include "autons.hpp"
 #include "includes.h"
+#include "subroutines.h"
 
 using namespace my_robot;
 
@@ -20,7 +22,7 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"AAAAAAAAAAh\n", redSWP},
+      {"AAAAAAAAAAh\n", PIDtune},
       {"Red Solo Win Point\n", redSWP},
       {"Blue Solo Win Point\n", blueSWP},
       {"Red Negative\n", redNegative},
@@ -89,20 +91,44 @@ void opcontrol() {
     else if (controller.get_digital(DIGITAL_L1))
       mogo.set_value(false);  // Deactivate mogo
 
-    // Control wall stake motor
-    if (controller.get_digital(DIGITAL_Y))
-      wall_stake.move_absolute(150, 110);  // Move wall stake to score position
-    else if (controller.get_digital(DIGITAL_X))
-      calibrateWallStake();  // Calibrate wall stake
-    else if (controller.get_digital(DIGITAL_B))
-      wall_stake.move_absolute(34, 110);  // Move wall stake to load position
-    else if (controller.get_digital(DIGITAL_LEFT)) {
-      wall_stake.move(-600);  // Move wall stake reverse
-    } else if (controller.get_digital(DIGITAL_UP)) {
-      wall_stake.move(600);  // Move wall stake forward
-    } else {
-      wall_stake.move(0);  // Stop wall stake
+    // Define a tolerance for holding position
+    const double POSITION_TOLERANCE = 2.0;
+
+    // Store the last commanded position
+    static double target_position = wall_stake.get_position();
+
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+      target_position = 150;  // Set new target position
+      wall_stake.move_absolute(target_position, 110);
+
+      // Wait until the motor reaches the position, but allow UP/LEFT override
+      while (std::abs(wall_stake.get_position() - target_position) > POSITION_TOLERANCE &&
+             !controller.get_digital(DIGITAL_UP) && !controller.get_digital(DIGITAL_LEFT)) {
+        pros::delay(10);  // Small delay to prevent CPU overload
+      }
+    } else if (controller.get_digital_new_press(DIGITAL_B)) {
+      target_position = 34;  // Set new target position
+      wall_stake.move_absolute(target_position, 110);
+
+      // Wait until the motor reaches the position, but allow UP/LEFT override
+      while (std::abs(wall_stake.get_position() - target_position) > POSITION_TOLERANCE &&
+             !controller.get_digital(DIGITAL_UP) && !controller.get_digital(DIGITAL_LEFT)) {
+        pros::delay(10);
+      }
+    } else if (controller.get_digital_new_press(DIGITAL_X)) {
+      calibrateWallStake();
     }
+    // Manual movement while holding buttons
+    else if (controller.get_digital(DIGITAL_LEFT)) {
+      wall_stake.move(-600);  // Move wall stake reverse (only while held)
+    } else if (controller.get_digital(DIGITAL_UP)) {
+      wall_stake.move(600);  // Move wall stake forward (only while held)
+    }
+    // Stop motor if UP or LEFT was released, but hold position when reaching target
+    else {
+      wall_stake.move_velocity(0);  // Hold position when reaching target
+    }
+
     pros::delay(25);  // Delay for the poor IC
   }
 }
