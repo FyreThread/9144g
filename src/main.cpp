@@ -22,10 +22,13 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
-      {"AAAAAAAAAAh\n", PIDtune},
+      {"Literally Nothing\n", skills},
       {"Red Solo Win Point\n", redSWP},
       {"Blue Solo Win Point\n", blueSWP},
       {"Red Negative\n", redNegative},
+      {"Blue Negative\n", blueNegative},
+      {"Blue Positive\n", bluePositive},
+      {"Red Positive\n", redPositive},
       {"Skills\n", skills},
   });
 
@@ -92,7 +95,7 @@ void opcontrol() {
       mogo.set_value(false);  // Deactivate mogo
 
     // Define a tolerance for holding position
-    const double POSITION_TOLERANCE = 2.0;
+    const double POSITION_TOLERANCE = 1.0;
 
     // Store the last commanded position
     static double target_position = wall_stake.get_position();
@@ -107,13 +110,13 @@ void opcontrol() {
         pros::delay(10);  // Small delay to prevent CPU overload
       }
     } else if (controller.get_digital_new_press(DIGITAL_B)) {
-      target_position = 34;  // Set new target position
+      target_position = 39;  // Set new target position
       wall_stake.move_absolute(target_position, 110);
 
       // Wait until the motor reaches the position, but allow UP/LEFT override
       while (std::abs(wall_stake.get_position() - target_position) > POSITION_TOLERANCE &&
              !controller.get_digital(DIGITAL_UP) && !controller.get_digital(DIGITAL_LEFT)) {
-        pros::delay(10);
+        pros::delay(15);
       }
     } else if (controller.get_digital_new_press(DIGITAL_X)) {
       calibrateWallStake();

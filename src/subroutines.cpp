@@ -57,11 +57,11 @@ void stopIntakeOnSecondPress() {
         pressCount = 0;  // Reset press count
       }
 
-      pros::delay(250);  // Debounce delay to prevent multiple triggers from a single press
+      pros::delay(150);  // Debounce delay to prevent multiple triggers from a single press
     }
 
     wasPressed = isPressed;  // Update the previous state
-    pros::delay(25);         // Regular delay to reduce CPU load
+    pros::delay(10);         // Regular delay to reduce CPU load
   }
 }
 
@@ -180,7 +180,7 @@ void colorSort(int waitTimeMs, int stopTimeMs, bool red_side) {
     int detected_hue = color_sort.get_hue();
 
     bool blue_detected = (detected_hue > 180 && detected_hue < 260);
-    bool red_detected = (detected_hue > 0 && detected_hue < 60);
+    bool red_detected = (detected_hue > 0 && detected_hue < 15);
 
     if ((red_side && blue_detected) || (!red_side && red_detected)) {
       // Stop the intake for the designated time
