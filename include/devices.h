@@ -5,27 +5,18 @@
 #include "lemlib/chassis/chassis.hpp"
 #include "lemlib/chassis/trackingWheel.hpp"
 #include "liblvgl/extra/layouts/flex/lv_flex.h"  // IWYU pragma:  keep
-#include "pros/adi.hpp"
-#include "pros/device.hpp"  // IWYU pragma:  keep
-#include "pros/misc.h"      // IWYU pragma:  keep
+#include "pros/adi.hpp"                          // IWYU pragma: keep
+#include "pros/device.hpp"                       // IWYU pragma:  keep
+#include "pros/misc.h"                           // IWYU pragma:  keep
 #include "pros/motor_group.hpp"
-#include "pros/motors.h"  // IWYU pragma:  keep
-#include "pros/motors.hpp"
+#include "pros/motors.h"     // IWYU pragma:  keep
+#include "pros/motors.hpp"   // IWYU pragma: keep
 #include "pros/optical.hpp"  // IWYU pragma:  keep
 #include "pros/rotation.hpp"
 
 namespace my_robot {
 
 extern pros::MotorGroup intake;
-extern pros::Motor firstStage;
-extern pros::v5::Motor secondStage;
-extern pros::adi::DigitalOut mogo;
-extern pros::adi::DigitalOut doinker;
-extern pros::adi::DigitalIn intake_sensor;
-extern pros::adi::DigitalIn wall_sensor;
-extern pros::Optical color_sort;
-
-extern pros::Motor wall_stake;
 
 // left motors
 extern pros::MotorGroup left_motors;
