@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "9144G",
+    "project_name": "9144Solo",
     "target": "v5",
     "templates": {
       "EZ-Template": {
@@ -467,7 +467,7 @@
       }
     },
     "upload_options": {
-      "description": "Pray to the deity of your choice",
+      "description": "4C 6F 76 65 20 79 6F 75 20 68 6F 6E 65 79 20 62 65 65",
       "icon": "X"
     },
     "use_early_access": false
