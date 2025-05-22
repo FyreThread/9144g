@@ -72,6 +72,21 @@ void opcontrol() {
       }
     }
 
+    // Controls
+
+    // Intake Controls
+    if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R2)) {
+      intake.move(127);
+    } else if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_R1)) {
+      intake.move(-127);
+    } else {
+      intake.move(0);
+    }
+    // Top Roller Controls
+    if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_B)) {
+      top_roller.move(-127);
+    }
+
     pros::delay(25);  // Delay for the poor IC
   }
 }

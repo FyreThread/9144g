@@ -18,6 +18,8 @@ namespace my_robot {
 
 extern pros::MotorGroup intake;
 
+extern pros::Motor top_roller;
+
 // left motors
 extern pros::MotorGroup left_motors;
 // right motors

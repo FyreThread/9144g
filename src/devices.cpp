@@ -19,21 +19,23 @@
 namespace my_robot {
 
 // Define motor groups and individual motors
-pros::MotorGroup intake({-6, -12});  // Intake motor group on ports 6 and -12
+pros::MotorGroup intake({-1, 10, -17, -9});  // Intake motor group on ports 6 and -12
+
+pros::Motor top_roller(-9);
 
 // Define left and right motor groups for the drivetrain
-pros::MotorGroup left_motors({-2, 3, -4}, pros::MotorGearset::blue);   // Left motors on ports -2, 3, -4
-pros::MotorGroup right_motors({7, -9, 10}, pros::MotorGearset::blue);  // Right motors on ports 7, -9, 10
+pros::MotorGroup left_motors({-20, -19, 18}, pros::MotorGearset::blue);   // Left motors on ports -2, 3, -4
+pros::MotorGroup right_motors({13, 12, -14}, pros::MotorGearset::blue);  // Right motors on ports 7, -9, 10
 
 // Define the drivetrain
-lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.0, lemlib::Omniwheel::NEW_325, 400, 8);
+lemlib::Drivetrain drivetrain(&left_motors, &right_motors, 12.0, lemlib::Omniwheel::NEW_325, 450, 8);
 
 // Define the inertial sensor
-pros::Imu imu(5);  // Inertial sensor on port 5
+pros::Imu imu(15);  // Inertial sensor on port 5
 
 // Define the vertical encoder
-pros::Rotation vertical_encoder(-18);   // Optical shaft encoder on ports 'A' and 'B'
-pros::Rotation horizontal_encoder(19);  // Optical shaft encoder on ports 'A' and 'B'
+pros::Rotation vertical_encoder(5);   // Optical shaft encoder on ports 'A' and 'B'
+pros::Rotation horizontal_encoder(6);  // Optical shaft encoder on ports 'A' and 'B'
 
 // Define the vertical tracking wheel
 lemlib::TrackingWheel vertical_tracking_wheel(&vertical_encoder, lemlib::Omniwheel::NEW_275, 0.5);
